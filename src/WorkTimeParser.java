@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class WorkTimeParser {
 
     public static String[][] prepareWorkTime(String[][] grafic) {
@@ -79,8 +83,43 @@ public class WorkTimeParser {
         } catch (Exception e) {
             return "Please provide valid time!";
         }
-
     }
-    
+
+    public void createHtmlTable(String[][] table) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("grafic.html"));
+            writer.write("<html><body>");
+            writer.write("<table>");
+
+            writer.write("<tr>");
+            writer.write("<th>Number</th>");
+            writer.write("<th>Name</th>");
+            writer.write("<th>Mon</th>");
+            writer.write("<th>Tue</th>");
+            writer.write("<th>Wed</th>");
+            writer.write("<th>Thur</th>");
+            writer.write("<th>Fri</th>");
+            writer.write("<th>Sat</th>");
+            writer.write("<th>Sun</th>");
+            writer.write("</tr>");
+
+            for (int i = 0; i < table.length; i++) {
+                if (table[i][0] != null) {
+                    writer.write("<tr>");
+                    writer.write("<td>" + (i + 1) + "</td>");
+                    for (int j = 0; j < table[i].length; j++) {
+                        writer.write("<td>" + table[i][j] + "</td>");
+                    }
+                    writer.write("</tr>");
+                }
+            }
+
+            writer.write("</table>");
+            writer.write("</body></html>");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }
